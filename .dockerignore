@@ -1,6 +1,7 @@
 test/
 build/
 deploy/
+hooks/
 LICENSE
 .travis.yml
 .gitignore
