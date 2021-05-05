@@ -1,0 +1,8 @@
+test/
+build/
+deploy/
+LICENSE
+.travis.yml
+.gitignore
+.goreleaser.yml
+README.md

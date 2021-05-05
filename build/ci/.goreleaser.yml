@@ -1,0 +1,40 @@
+project_name: kube-httpcache
+before:
+  hooks:
+    - go mod download
+    - go vet ./...
+    - go test ./...
+builds:
+  - env:
+      - CGO_ENABLED=0
+      - GO111MODULE=on
+    binary: kube-httpcache
+    main: ./cmd/kube-httpcache/main.go
+    goos:
+      - linux
+    goarch:
+      - amd64
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+dockers:
+  -
+    image_templates:
+      - quay.io/mittwald/kube-httpcache:latest
+      - quay.io/mittwald/kube-httpcache:v{{ .Major }}
+      - quay.io/mittwald/kube-httpcache:v{{ .Major }}.{{ .Minor }}
+      - quay.io/mittwald/kube-httpcache:{{ .Tag }}
+      - quay.io/mittwald/kube-httpcache:stable
+    dockerfile: build/package/docker/GoReleaser.Dockerfile
+    binaries:
+      - kube-httpcache
+    goos: linux
+    goarch: amd64
+    goarm: ''
